@@ -1,0 +1,31 @@
+
+1.Extract Top10 Records with Column Headers using the actual Data file using "ExtractTop10Rec.ps1" script.
+2.Generate CreateTable .sql file using "CreateTable.ps1" powershell script using Top10 Records Data file.
+3.Using .sql file, create the required table for the specific schema manually.
+4.Now generate the XML Format File based on above created table structure using below either of BCP command
+	bcp "Community Health Choice".PY1.[20250307_CHC_Claim_RAW] format null -S PH-CLAIMSROI -T -x -f test.xml -c -t `|
+	or
+	bcp "[Community Health Choice].PY1.[20250307_CHC_Claim_Baseline_RAW]" format null -S PH-CLAIMSROI -T -x -f XmlFormatFile2.xml -c -t "|"
+
+	format : bcp dbname.schema.tblname format null -S servername -T -x -f xmlformatfile.xml -c -t `|
+
+
+5.Use the BCPImportScript to load the csv data file to table
+6.We can use the the script "FileSpliter.ps1" for spliting the large files into 500MB size with Column Headers for loading into DB, if Full Data File load causing any error.
+
+
+bcp PY1.[20250307_CHC_Claim_RAW] in "C:\Users\rlakkam\Documents\BCP\20250307_CHC_Claim.TXT" -S PH-CLAIMSROI -d "Community Health Choice" -T -F 2 -f "C:\Users\rlakkam\Documents\BCP\test.xml" -e error.log
+
+bcp PY1.[20250307_CHC_Claim_RAW] in "C:\Users\rlakkam\Documents\BCP\Chunks\chunk_1.csv" -S PH-CLAIMSROI -d "Community Health Choice" -T -F 2 -f "C:\Users\rlakkam\Documents\BCP\test.xml" -e error.log
+
+bcp PY1.[20250307_CHC_Claim_RAW] in "C:\Users\rlakkam\Documents\BCP\Chunks\chunk_2.csv" -S PH-CLAIMSROI -d "Community Health Choice" -T -F 2 -f "C:\Users\rlakkam\Documents\BCP\test.xml" -e error.log
+
+bcp PY1.[20250307_CHC_Claim_RAW] in "C:\Users\rlakkam\Documents\BCP\Chunks\chunk_3.csv" -S PH-CLAIMSROI -d "Community Health Choice" -T -F 2 -f "C:\Users\rlakkam\Documents\BCP\test.xml" -e error.log
+
+or
+
+bcp PY1.[20250307_CHC_Claim_Baseline_RAW] in "C:\Users\rlakkam\Documents\BCP\20250307_CHC_Claim_Baseline_Chunks\chunk_1.csv" -S PH-CLAIMSROI -d "Community Health Choice" -T -F 2 -f "C:\Users\rlakkam\Documents\BCP\XmlFormatFile2.xml" -e error.log
+
+Useful Links:
+https://learn.microsoft.com/en-us/sql/relational-databases/import-export/xml-format-files-sql-server?view=sql-server-ver16
+https://learn.microsoft.com/en-us/sql/relational-databases/import-export/create-a-format-file-sql-server?view=sql-server-ver16&tabs=xml

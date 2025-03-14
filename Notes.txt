@@ -1,7 +1,0 @@
-1.Generate Create Table .sql file for the csv data file.
-2.Using .sql file, create the required table for the specific schema manually.
-3.Now generate the XML Format File based on above created table structure using below BCP command
-bcp Progeny.PY1.[20250307_CHC_Claim_RAW] format null -S GZN00000684 -T -x -f test.xml -c -t `|
-format : bcp dbname.schema.tblname format null -S servername -T -x -f xmlformatfile.xml -c -t `|
-4.Check the generated format file and make changes as needed to ensure
-5.Use the BCPImportScript to load the csv data file to table

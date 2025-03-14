@@ -1,7 +1,7 @@
 # Set variables
 $schemaName = "PY1"
-$tableName = "[20250307_CHC_Claim_RAW]"        # Change this to your desired table name
-$csvFilePath = "C:\Users\RLakkam\repos\DataImport\Top10_Records.TXT"  # Change this to the CSV file path
+$tableName = "[20250307_CHC_Claim_Baseline_RAW]"        # Change this to your desired table name
+$csvFilePath = "C:\Users\rlakkam\Documents\BCP\Top10_Records2.TXT"  # Change this to the CSV file path
 $delimiter = "|"  # Change this if your file uses a different delimiter
 
 # Read only the first 10 lines including headers
@@ -22,4 +22,4 @@ CREATE TABLE $schemaName.$tableName (
 
 # Execute SQL to create table
 #Invoke-Sqlcmd -ServerInstance $serverName -Database $databaseName -Query $createTableSQL
-$createTableSQL | Out-File 'CreateTableNoIdentity.sql'
+$createTableSQL | Out-File 'CHC_Claim_Baseline_RAW.sql'
